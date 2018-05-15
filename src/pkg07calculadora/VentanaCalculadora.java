@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-public class VentanaCalculadora extends JFrame// implements KeyListener
+public class VentanaCalculadora extends JFrame implements KeyListener
 {
     /* contenedor general y paneles donde colocaremos los botones */
     JPanel panel, panelNumeros, panelOperaciones;
@@ -85,7 +85,7 @@ public class VentanaCalculadora extends JFrame// implements KeyListener
  //las dimensiones de los botones las ajusta a la letra y los coloca a la derecha
         panel.add("East", panelOperaciones);
         this.setFocusable(true);//Necesario para que la ventana capture el teclado
-        addKeyListener(new CapturaTeclado());
+        addKeyListener(this);
   
         
     }
@@ -198,5 +198,28 @@ public class VentanaCalculadora extends JFrame// implements KeyListener
         pantalla.setText("" + resultado);
         operacion = "";
     }
+    
+     
+      @Override
+      public void keyPressed(KeyEvent e) {
+     //    if (e.getKeyCode()==49){System.out.print(numeroPulsado(e.getKeyCode;}
+     //Llamamos al método número pulsado, tambien cuando pulsan un número en el teclado, tanto el númerico como el de caracteres
+     //Pasando previamente el caracter a string
+    
+        if((e.getKeyCode()>=48 && e.getKeyCode()<=57) || (e.getKeyCode()>=96 && e.getKeyCode()<=105)){
+           
+            numeroPulsado(String.valueOf(e.getKeyChar()));
+             // if (e.getKeyCode()==KeyEvent.v){System.out.print("Has pulsado un 1");}
+         }
+        
+        
+      }
+      
+      
+      @Override
+      public void keyReleased(KeyEvent e) {
+      }
+      @Override
+      public void keyTyped(KeyEvent e) {}
 
 }
