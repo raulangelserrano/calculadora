@@ -84,11 +84,14 @@ public class VentanaCalculadora extends JFrame implements KeyListener
         nuevoBotonOperacion("CE");
  //las dimensiones de los botones las ajusta a la letra y los coloca a la derecha
         panel.add("East", panelOperaciones);
-        this.setFocusable(true);//Necesario para que la ventana capture el teclado
+      //Necesario para que la ventana capture el teclado
         addKeyListener(this);
-  
+        this.setFocusable(true);
+       
         
     }
+    
+  
     
     /*
      * Crea un boton del teclado numérico y enlaza sus eventos con el listener
@@ -99,7 +102,8 @@ public class VentanaCalculadora extends JFrame implements KeyListener
         JButton btn = new JButton();
         btn.setForeground(Color.BLUE);//color azul para dígitos
         btn.setText(digito);
-        btn.addKeyListener(new CapturaTeclado());
+        btn.setFocusable(false);
+      
         btn.addMouseListener(new MouseAdapter() 
         {
             @Override
@@ -121,6 +125,7 @@ public class VentanaCalculadora extends JFrame implements KeyListener
     {
         JButton btn = new JButton(operacion);
         btn.setForeground(Color.RED);//color rojo para operadores
+        btn.setFocusable(false);
         btn.addMouseListener(new MouseAdapter() 
         {
             @Override
@@ -147,6 +152,8 @@ public class VentanaCalculadora extends JFrame implements KeyListener
             pantalla.setText(pantalla.getText() + digito);
         }
         nuevaOperacion = false;
+        
+        
     }
     /*
      * Gestiona las pulsaciones de teclas de operación
@@ -211,6 +218,23 @@ public class VentanaCalculadora extends JFrame implements KeyListener
             numeroPulsado(String.valueOf(e.getKeyChar()));
              // if (e.getKeyCode()==KeyEvent.v){System.out.print("Has pulsado un 1");}
          }
+        
+        //Llamamos a operación utilizando getKeyChar en caso de que sean  + - / **
+        if (e.getKeyChar() == '+' || e.getKeyChar() == '-' || e.getKeyChar() == '/' ||  e.getKeyChar() == '*'){
+           operacionPulsado(String.valueOf(e.getKeyChar()));
+        }
+        
+        //Pasamos como parámetro un igual tanto si pulsan enter como si pulsan igual
+         if (e.getKeyCode() == 10 || e.getKeyChar() == '='){
+           operacionPulsado(String.valueOf("="));
+        }
+         
+         //Pasamos como parámetro un CE en caso de que pulsen la tecla borrar
+         if (e.getKeyCode() == 8 ){
+           operacionPulsado(String.valueOf("CE"));
+        }
+        System.out.println("Has pulsado: " + e.getKeyCode());
+         System.out.println("tecla pulsada pulsado: " + e.getKeyChar());
         
         
       }
